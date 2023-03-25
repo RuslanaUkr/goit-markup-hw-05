@@ -8,6 +8,8 @@
   --light-background: #f4f4fd;
   --subtle-text-color: #8e8f99;
   --success: #31d0aa;
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-bcg: #fcfcfc;
 }
 
 body {
@@ -100,10 +102,22 @@ button {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.02em;
+  transition: color var(--transition);
+  position: relative;
 }
 
 .headerpage-menu-list.current {
   color: var(--btn-background);
+}
+.headerpage-menu-list.current::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--primary-brand);
+  margin-top: 20px;
 }
 
 .headerpage-menu-list:hover,
@@ -118,6 +132,7 @@ button {
   line-height: 1.5;
   letter-spacing: 0.02em;
   color: var(--text);
+  transition: color var(--transition);
 }
 .list-contacts > li:not(:last-child) {
   margin-right: 40px;
@@ -165,6 +180,7 @@ button {
   border-radius: 4px;
   display: inline-block;
   padding: 16px 32px;
+  transition: background-color var(--transition);
 }
 
 .hero-btn:hover,
@@ -187,6 +203,7 @@ button {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.02em;
+  color: var(--dark);
 }
 .section-title {
   font-weight: 700;
@@ -257,6 +274,7 @@ button {
   align-items: center;
   background-color: var(--primary-brand);
   border-radius: 50%;
+  transition: color var(--transition);
 }
 .team-soc-icon {
   fill: var(--light-background);
@@ -276,6 +294,7 @@ button {
   border-radius: 4px;
   fill: var(--subtle-text-color);
   padding: 16px 32px;
+  transition: fill var(--transition), border-color var(--transition);
 }
 .customers-link:hover,
 .customers-link:focus {
@@ -293,6 +312,40 @@ button {
   gap: 24px;
   flex-wrap: wrap;
 }
+
+.card-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.overlay {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  transform: translateY(100%);
+  transition: transform var(--transition);
+  padding-top: 40px;
+  padding-left: 32px;
+  padding-right: 32px;
+  background-color: var(--primary-brand);
+
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--light-background);
+}
+
+.portfolio-cards-item-link:hover .overlay,
+.portfolio-cards-item-link:focus .overlay {
+  transform: translateY(0);
+}
+.portfolio-cards-item {
+  transition: box-shadow var(--transition);
+}
+
 .portfolio-cards-item:hover,
 .portfolio-cards-item:focus {
   box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
@@ -322,6 +375,7 @@ button {
   border-radius: 4px;
   padding: 12px 24px;
   border: 0px;
+  transition: color var(--transition), background-color var(--transition), box-shadow var(--transition);
 }
 
 .filters-list-btn:hover,
@@ -386,10 +440,67 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--subtle-text-color);
+  background-color: var(--primary-brand);
   border-radius: 50%;
+  transition: background-color var(--transition);
 }
 .soc-media-link:hover,
 .soc-media-link:focus {
   background-color: var(--success);
+}
+/* ----------Modal---------- */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 47, 66, 0.4);
+  z-index: 100;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transition), visibility var(--transition);
+}
+.modal {
+  width: 408px;
+  height: 576px;
+  background-color: var(--modal-bcg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal-close-icon {
+  width: 8px;
+  height: 8px;
+  transition: fill var(--transition);
+}
+.modal-close-btn {
+  background-color: var(--accent);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  transition: background-color var(--transition);
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  background-color: var(--btn-background);
+}
+
+.modal-close-btn:hover .modal-close-icon,
+.modal-close-btn:focus .modal-close-icon {
+  fill: var(--primery-bcg);
 }
